@@ -65,7 +65,7 @@ export default async function HomePage() {
         <Link className="category-link category-active" href={ROUTES.home}><span aria-hidden="true">⌂</span><small>Home</small></Link>
         <a className="category-link" href="#discover"><span aria-hidden="true">♜</span><small>Food</small></a>
         <a className="category-link" href="#discover"><span aria-hidden="true">▦</span><small>Express</small></a>
-        <Link className="category-link" href={ROUTES.wishlist}><span aria-hidden="true">▣</span><small>History</small></Link>
+        <a className="category-link" href="#discover"><span aria-hidden="true">▣</span><small>History</small></a>
         <Link className="category-link" href={ROUTES.cart}><span aria-hidden="true">🛒</span><small>Cart</small></Link>
       </nav>
 
@@ -112,7 +112,7 @@ export default async function HomePage() {
         <Link href={ROUTES.home} aria-current="page"><span aria-hidden="true">⌂</span><small>Home</small></Link>
         <a href="#discover"><span aria-hidden="true">♜</span><small>Food</small></a>
         <Link href={ROUTES.sellApply}><span aria-hidden="true">▦</span><small>Marketplace</small></Link>
-        <Link href={ROUTES.wishlist}><span aria-hidden="true">▣</span><small>History</small></Link>
+        <a href="#discover"><span aria-hidden="true">▣</span><small>History</small></a>
         <Link href={ROUTES.cart}><span aria-hidden="true">🛒</span><small>Cart</small></Link>
       </nav>
       <footer className="site-footer"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang</span></Link>{content && <p>{content.footerTagline}</p>}<span>© {new Date().getFullYear()} Veyrang Marketplace</span></footer>
