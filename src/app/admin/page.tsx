@@ -56,29 +56,33 @@ export default async function AdminPage() {
         <div className="admin-section-head"><div><p className="eyebrow">SITE CONTENT</p><h2>Homepage copy</h2></div></div>
         {homepageError && <p className="admin-error">Published content could not be loaded. Saving is disabled until the database is available.</p>}
         <form action={saveHomepageContent} className="admin-form admin-form-grid">
-          <input name="title" required maxLength={160} defaultValue={homepageRow?.title ?? ""} placeholder="Homepage content title" />
-          <input name="heroEyebrow" required maxLength={100} defaultValue={String(homepageContent.heroEyebrow ?? "")} placeholder="Hero eyebrow" />
-          <input name="heroTitle" required maxLength={100} defaultValue={String(homepageContent.heroTitle ?? "")} placeholder="Hero title" />
-          <input name="heroAccent" required maxLength={100} defaultValue={String(homepageContent.heroAccent ?? "")} placeholder="Hero accent line" />
-          <textarea name="heroDescription" required maxLength={500} rows={3} defaultValue={String(homepageContent.heroDescription ?? "")} placeholder="Hero description" className="span-2" />
-          <input name="heroButton" required maxLength={100} defaultValue={String(homepageContent.heroButton ?? "")} placeholder="Primary button label" />
-          <input name="heroNote" required maxLength={160} defaultValue={String(homepageContent.heroNote ?? "")} placeholder="Hero note" />
-          <input name="catalogEyebrow" required maxLength={100} defaultValue={String(homepageContent.catalogEyebrow ?? "")} placeholder="Catalog eyebrow" />
-          <input name="catalogTitle" required maxLength={120} defaultValue={String(homepageContent.catalogTitle ?? "")} placeholder="Catalog title" />
-          <input name="footerTagline" required maxLength={180} defaultValue={String(homepageContent.footerTagline ?? "")} placeholder="Footer tagline" />
-          <input name="seoTitle" required maxLength={70} defaultValue={String(homepageContent.seoTitle ?? "")} placeholder="SEO title (max 70)" />
-          <textarea name="seoDescription" required maxLength={180} rows={2} defaultValue={String(homepageContent.seoDescription ?? "")} placeholder="SEO description (max 180)" className="span-2" />
-          <input name="trustOne" required maxLength={100} defaultValue={String(homepageContent.trustOne ?? "")} placeholder="Trust point 1" />
-          <input name="trustTwo" required maxLength={100} defaultValue={String(homepageContent.trustTwo ?? "")} placeholder="Trust point 2" />
-          <input name="trustThree" required maxLength={100} defaultValue={String(homepageContent.trustThree ?? "")} placeholder="Trust point 3" />
-          <input name="trustFour" required maxLength={100} defaultValue={String(homepageContent.trustFour ?? "")} placeholder="Trust point 4" />
-          <input name="artBackLabel" required maxLength={50} defaultValue={String(homepageContent.artBackLabel ?? "")} placeholder="Artwork back label" />
-          <input name="artBackNumber" required maxLength={12} defaultValue={String(homepageContent.artBackNumber ?? "")} placeholder="Artwork number/mark" />
-          <input name="artTitle" required maxLength={80} defaultValue={String(homepageContent.artTitle ?? "")} placeholder="Artwork title" />
-          <input name="artCaption" required maxLength={100} defaultValue={String(homepageContent.artCaption ?? "")} placeholder="Artwork caption" />
+          <input name="title" required maxLength={160} defaultValue={homepageRow?.title ?? "Marketplace homepage"} placeholder="Internal title (admin only)" />
+          <input name="heroEyebrow" required maxLength={100} defaultValue={String(homepageContent.heroEyebrow ?? "BEST DEALS. TOP BRANDS.")} placeholder="Hero eyebrow" />
+          <input name="heroTitle" required maxLength={100} defaultValue={String(homepageContent.heroTitle ?? "Everything You Need,")} placeholder="Hero title line 1" />
+          <input name="heroAccent" required maxLength={100} defaultValue={String(homepageContent.heroAccent ?? "One Marketplace")} placeholder="Hero accent (orange line)" />
+          <textarea name="heroDescription" required maxLength={500} rows={3} defaultValue={String(homepageContent.heroDescription ?? "Quality products, trusted sellers, fast delivery.")} placeholder="Hero description" className="span-2" />
+          <input name="heroButton" required maxLength={100} defaultValue={String(homepageContent.heroButton ?? "Shop Now")} placeholder="Primary button" />
+          <input name="heroNote" required maxLength={160} defaultValue={String(homepageContent.heroNote ?? "Trusted sellers, fast delivery")} placeholder="Hero note" />
+          <input name="catalogEyebrow" required maxLength={100} defaultValue={String(homepageContent.catalogEyebrow ?? "DISCOVER")} placeholder="Catalog eyebrow" />
+          <input name="catalogTitle" required maxLength={120} defaultValue={String(homepageContent.catalogTitle ?? "Shop the marketplace")} placeholder="Catalog title" />
+          <input name="flashTitle" required maxLength={40} defaultValue={String(homepageContent.flashTitle ?? "Flash Sale")} placeholder="Flash Sale rail title" />
+          <input name="choiceTitle" required maxLength={40} defaultValue={String(homepageContent.choiceTitle ?? "Choice")} placeholder="Choice rail title" />
+          <input name="trendingTitle" required maxLength={40} defaultValue={String(homepageContent.trendingTitle ?? "Trending Now")} placeholder="Trending section title" />
+          <input name="trendingLinkLabel" required maxLength={40} defaultValue={String(homepageContent.trendingLinkLabel ?? "Best Picks for You")} placeholder="Trending link label" />
+          <input name="footerTagline" required maxLength={180} defaultValue={String(homepageContent.footerTagline ?? "VeyraNG Delivery Pro marketplace")} placeholder="Footer tagline" />
+          <input name="seoTitle" required maxLength={70} defaultValue={String(homepageContent.seoTitle ?? "VeyraNG Marketplace")} placeholder="SEO title (max 70)" />
+          <textarea name="seoDescription" required maxLength={180} rows={2} defaultValue={String(homepageContent.seoDescription ?? "Shop quality products from verified sellers on VeyraNG.")} placeholder="SEO description (max 180)" className="span-2" />
+          <input name="trustOne" required maxLength={100} defaultValue={String(homepageContent.trustOne ?? "Secure Payments")} placeholder="Trust 1 Secure Payments" />
+          <input name="trustTwo" required maxLength={100} defaultValue={String(homepageContent.trustTwo ?? "Fast Delivery")} placeholder="Trust 2 Fast Delivery" />
+          <input name="trustThree" required maxLength={100} defaultValue={String(homepageContent.trustThree ?? "Verified Sellers")} placeholder="Trust 3 Verified Sellers" />
+          <input name="trustFour" required maxLength={100} defaultValue={String(homepageContent.trustFour ?? "24/7 Support")} placeholder="Trust 4 24/7 Support" />
+          <input name="artBackLabel" required maxLength={50} defaultValue={String(homepageContent.artBackLabel ?? "MARKET")} placeholder="Artwork back label" />
+          <input name="artBackNumber" required maxLength={12} defaultValue={String(homepageContent.artBackNumber ?? "01")} placeholder="Artwork number/mark" />
+          <input name="artTitle" required maxLength={80} defaultValue={String(homepageContent.artTitle ?? "Featured")} placeholder="Artwork title" />
+          <input name="artCaption" required maxLength={100} defaultValue={String(homepageContent.artCaption ?? "Curated for you")} placeholder="Artwork caption" />
           <button type="submit" disabled={Boolean(homepageError)} className="primary-button span-2">Publish homepage content</button>
         </form>
-        <p className="admin-footnote">Published homepage business copy comes from this Supabase record; there is no hardcoded marketing fallback.</p>
+        <p className="admin-footnote">Hero, trust strip, and rail titles publish to Supabase site_content. Product cards always come from published products rows.</p>
       </section>
 
       <section className="admin-workspace">
