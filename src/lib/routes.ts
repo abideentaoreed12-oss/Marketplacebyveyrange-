@@ -1,16 +1,26 @@
 /**
- * Canonical route registry. Use these paths for links and redirects.
- * Do not add aliases or duplicate implementations for the same destination.
- * Add a route here only when its page/handler exists and is covered by route audit.
+ * Canonical route registry. One path per destination.
+ * Navigation and redirects must use these values only.
+ * Never add alias pages or competing fallback implementations.
  */
 export const ROUTES = {
   home: "/",
   signIn: "/auth/sign-in",
-  admin: "/admin"
+  admin: "/admin",
+  product: (slug: string) => `/products/${encodeURIComponent(slug)}` as const,
+  sellApply: "/sell/apply"
 } as const;
 
-export type CanonicalRoute = (typeof ROUTES)[keyof typeof ROUTES];
+/** Static paths that must exist as App Router pages */
+export const STATIC_ROUTES = [
+  ROUTES.home,
+  ROUTES.signIn,
+  ROUTES.admin,
+  ROUTES.sellApply
+] as const;
 
-export function isCanonicalRoute(path: string): path is CanonicalRoute {
-  return Object.values(ROUTES).includes(path as CanonicalRoute);
+export type StaticRoute = (typeof STATIC_ROUTES)[number];
+
+export function isStaticRoute(path: string): path is StaticRoute {
+  return (STATIC_ROUTES as readonly string[]).includes(path);
 }
