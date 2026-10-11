@@ -63,19 +63,19 @@ export default async function HomePage() {
       </header>
       <nav className="category-navigation" aria-label="Marketplace shortcuts">
         <Link className="category-link category-active" href={ROUTES.home}><span aria-hidden="true">⌂</span><small>Home</small></Link>
-        <a className="category-link" href="#discover"><span aria-hidden="true">⌕</span><small>Discover</small></a>
-        <Link className="category-link" href={ROUTES.sellApply}><span aria-hidden="true">＋</span><small>Sell</small></Link>
-        <Link className="category-link" href={ROUTES.wishlist}><span aria-hidden="true">♡</span><small>Saved</small></Link>
+        <a className="category-link" href="#discover"><span aria-hidden="true">♜</span><small>Food</small></a>
+        <a className="category-link" href="#discover"><span aria-hidden="true">▦</span><small>Express</small></a>
+        <Link className="category-link" href={ROUTES.wishlist}><span aria-hidden="true">▣</span><small>History</small></Link>
         <Link className="category-link" href={ROUTES.cart}><span aria-hidden="true">🛒</span><small>Cart</small></Link>
       </nav>
 
       <section className="hero">
         <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-dot" /> {content?.heroEyebrow}</p>
-          <h1>{content ? <>{content.heroTitle}<br /><span>{content.heroAccent}</span></> : contentUnavailable ? "Marketplace content unavailable" : "Homepage content not published"}</h1>
-          <p className="hero-description">{content?.heroDescription ?? (contentUnavailable ? "We could not retrieve the published homepage content. Please try again later." : "The administrator has not published homepage content yet.")}</p>
-          {content && <a className="primary-button" href="#discover">{content.heroButton} <span aria-hidden="true">↗</span></a>}
-          {content && <p className="hero-note">{content.heroNote}</p>}
+          <p className="eyebrow"><span className="eyebrow-dot" /> {content?.heroEyebrow ?? "BEST DEALS. TOP BRANDS."}</p>
+          <h1>{content ? <>{content.heroTitle}<br /><span>{content.heroAccent}</span></> : <>Everything You Need,<br /><span>One Marketplace</span></>}</h1>
+          <p className="hero-description">{content?.heroDescription ?? "Quality products, trusted sellers, fast delivery."}</p>
+          <a className="primary-button" href="#discover">{content?.heroButton ?? "Shop Now"} <span aria-hidden="true">→</span></a>
+          {content?.heroNote && <p className="hero-note">{content.heroNote}</p>}
         </div>
         <div className="hero-art" aria-label="Veyrang Marketplace promotional artwork" role="img">
           <div className="hero-glow" />
@@ -110,9 +110,9 @@ export default async function HomePage() {
 
       <nav className="mobile-marketplace-nav" aria-label="Marketplace shortcuts">
         <Link href={ROUTES.home} aria-current="page"><span aria-hidden="true">⌂</span><small>Home</small></Link>
-        <a href="#discover"><span aria-hidden="true">⌕</span><small>Discover</small></a>
-        <Link href={ROUTES.sellApply}><span aria-hidden="true">▤</span><small>Sell</small></Link>
-        <Link href={ROUTES.wishlist}><span aria-hidden="true">♡</span><small>Saved</small></Link>
+        <a href="#discover"><span aria-hidden="true">♜</span><small>Food</small></a>
+        <Link href={ROUTES.sellApply}><span aria-hidden="true">▦</span><small>Marketplace</small></Link>
+        <Link href={ROUTES.wishlist}><span aria-hidden="true">▣</span><small>History</small></Link>
         <Link href={ROUTES.cart}><span aria-hidden="true">🛒</span><small>Cart</small></Link>
       </nav>
       <footer className="site-footer"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang</span></Link>{content && <p>{content.footerTagline}</p>}<span>© {new Date().getFullYear()} Veyrang Marketplace</span></footer>
