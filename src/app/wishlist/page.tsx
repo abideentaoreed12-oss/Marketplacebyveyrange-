@@ -20,7 +20,7 @@ export default async function WishlistPage() {
   if (wishlistError || itemsError) {
     return <main className="auth-shell"><section className="auth-panel"><h1>Wishlist unavailable</h1><p>Your saved items could not be loaded. Please try again later.</p><Link href={ROUTES.home}>Back to marketplace</Link></section></main>;
   }
-  const products = (items ?? []).map((item) => item.products).filter((product) => product && product.status === "published");
+  const products = (items ?? []).flatMap((item) => item.products).filter((product) => product && product.status === "published");
   return (
     <main className="catalog-section">
       <header className="admin-header"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang <span className="brand-light">/ saved items</span></span></Link><Link href={ROUTES.home}>Continue shopping</Link></header>
