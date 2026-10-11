@@ -56,6 +56,7 @@ export default async function HomePage() {
           <a className="nav-discover" href="#discover">Discover</a>
           <Link className="nav-sell" href={ROUTES.sellApply}>Sell</Link>
           <Link className="nav-join" href={ROUTES.signIn}>Join</Link>
+          <Link className="nav-cart" href={ROUTES.cart}>Cart</Link>
         </nav>
       </header>
 
