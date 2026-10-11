@@ -1,0 +1,18 @@
+name: apply-admin-batch
+on:
+  workflow_dispatch:
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/write_admin_batch.py
+      - run: |
+          git config user.name veyrang-bot
+          git config user.email bot@veyrang.com
+          git add src/app/admin/actions.ts src/app/admin/page.tsx
+          git diff --cached --quiet && exit 0
+          git commit -m "feat(admin): createProduct with seller/category tag; full governance UI"
+          git push
