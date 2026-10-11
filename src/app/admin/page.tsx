@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ROUTES } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
-import { createCategory, setSellerStatus, setProductStatus, saveHomepageContent } from "./actions";
+import { createCategory, setCategoryStatus, setSellerStatus, setProductStatus, saveHomepageContent } from "./actions";
 import { createProduct } from "./create-product";
 
 export const dynamic = "force-dynamic";
@@ -66,6 +66,14 @@ export default async function AdminPage() {
           <input name="catalogEyebrow" required maxLength={100} defaultValue={String(homepageContent.catalogEyebrow ?? "")} placeholder="Catalog eyebrow" />
           <input name="catalogTitle" required maxLength={120} defaultValue={String(homepageContent.catalogTitle ?? "")} placeholder="Catalog title" />
           <input name="footerTagline" required maxLength={180} defaultValue={String(homepageContent.footerTagline ?? "")} placeholder="Footer tagline" />
+          <input name="trustOne" required maxLength={100} defaultValue={String(homepageContent.trustOne ?? "")} placeholder="Trust point 1" />
+          <input name="trustTwo" required maxLength={100} defaultValue={String(homepageContent.trustTwo ?? "")} placeholder="Trust point 2" />
+          <input name="trustThree" required maxLength={100} defaultValue={String(homepageContent.trustThree ?? "")} placeholder="Trust point 3" />
+          <input name="trustFour" required maxLength={100} defaultValue={String(homepageContent.trustFour ?? "")} placeholder="Trust point 4" />
+          <input name="artBackLabel" required maxLength={50} defaultValue={String(homepageContent.artBackLabel ?? "")} placeholder="Artwork back label" />
+          <input name="artBackNumber" required maxLength={12} defaultValue={String(homepageContent.artBackNumber ?? "")} placeholder="Artwork number/mark" />
+          <input name="artTitle" required maxLength={80} defaultValue={String(homepageContent.artTitle ?? "")} placeholder="Artwork title" />
+          <input name="artCaption" required maxLength={100} defaultValue={String(homepageContent.artCaption ?? "")} placeholder="Artwork caption" />
           <button type="submit" disabled={Boolean(homepageError)} className="primary-button span-2">Publish homepage content</button>
         </form>
         <p className="admin-footnote">Published homepage business copy comes from this Supabase record; there is no hardcoded marketing fallback.</p>
@@ -81,7 +89,7 @@ export default async function AdminPage() {
         {categoriesError ? <p className="admin-error">Unavailable</p> : (
           <div className="admin-list">
             {(categories ?? []).map((c) => (
-              <article className="admin-list-row" key={c.id}><div><strong>{c.name}</strong><small>/{c.slug} · {c.is_active ? "active" : "inactive"}</small></div></article>
+              <article className="admin-list-row" key={c.id}><div><strong>{c.name}</strong><small>/{c.slug} · {c.is_active ? "active" : "inactive"}</small></div><form action={setCategoryStatus} className="admin-inline-form"><input type="hidden" name="categoryId" value={c.id} /><select name="isActive" defaultValue={String(c.is_active)}><option value="true">active</option><option value="false">inactive</option></select><button type="submit" className="secondary-button">Update</button></form></article>
             ))}
           </div>
         )}

@@ -61,11 +61,11 @@ export async function setProductStatus(formData: FormData) {
 
 export async function saveHomepageContent(formData: FormData) {
   const db = await requireAdmin();
-  const fields = ["heroEyebrow", "heroTitle", "heroAccent", "heroDescription", "heroButton", "heroNote", "catalogEyebrow", "catalogTitle", "footerTagline"] as const;
+  const fields = ["heroEyebrow", "heroTitle", "heroAccent", "heroDescription", "heroButton", "heroNote", "catalogEyebrow", "catalogTitle", "footerTagline", "trustOne", "trustTwo", "trustThree", "trustFour", "artBackLabel", "artBackNumber", "artTitle", "artCaption"] as const;
   const content: Record<string, string> = {};
   for (const field of fields) {
     const value = String(formData.get(field) ?? "").trim();
-    if (!value || value.length > (field === "heroDescription" ? 500 : 180)) {
+    if (!value || value.length > (field === "heroDescription" ? 500 : field === "artBackNumber" ? 12 : field === "artTitle" ? 80 : field === "artBackLabel" ? 50 : 180)) {
       throw new Error("Complete all homepage content fields within their character limits.");
     }
     content[field] = value;
@@ -81,5 +81,18 @@ export async function saveHomepageContent(formData: FormData) {
   if (error) throw new Error(error.message || "Homepage content was not published.");
   revalidatePath(ROUTES.home);
   revalidatePath(ROUTES.admin);
+  redirect(ROUTES.admin);
+}
+
+
+export async function setCategoryStatus(formData: FormData) {
+  const db = await requireAdmin();
+  const id = String(formData.get("categoryId") ?? "").trim();
+  const active = String(formData.get("isActive") ?? "");
+  if (!id || !["true", "false"].includes(active)) throw new Error("Invalid category status request.");
+  const { error } = await db.rpc("admin_set_category_status", { p_category_id: id, p_is_active: active === "true" });
+  if (error) throw new Error(error.message || "Category status was not updated.");
+  revalidatePath(ROUTES.admin);
+  revalidatePath(ROUTES.home);
   redirect(ROUTES.admin);
 }

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
 
-type HomepageContent = { heroEyebrow: string; heroTitle: string; heroAccent: string; heroDescription: string; heroButton: string; heroNote: string; catalogEyebrow: string; catalogTitle: string; footerTagline: string };
+type HomepageContent = { heroEyebrow: string; heroTitle: string; heroAccent: string; heroDescription: string; heroButton: string; heroNote: string; catalogEyebrow: string; catalogTitle: string; footerTagline: string; trustOne: string; trustTwo: string; trustThree: string; trustFour: string; artBackLabel: string; artBackNumber: string; artTitle: string; artCaption: string };
 
 type Product = {
   id: string;
