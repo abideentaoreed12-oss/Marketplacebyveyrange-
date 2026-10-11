@@ -7,6 +7,7 @@ export const ROUTES = {
   home: "/",
   signIn: "/auth/sign-in",
   admin: "/admin",
+  wishlist: "/wishlist",
   product: (slug: string) => `/products/${encodeURIComponent(slug)}` as const,
   sellApply: "/sell/apply"
 } as const;
@@ -16,6 +17,7 @@ export const STATIC_ROUTES = [
   ROUTES.home,
   ROUTES.signIn,
   ROUTES.admin,
+  ROUTES.wishlist,
   ROUTES.sellApply
 ] as const;
 

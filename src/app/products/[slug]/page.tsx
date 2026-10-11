@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ROUTES } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
+import { toggleWishlistItem } from "@/app/wishlist/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -77,7 +78,7 @@ export default async function ProductPage({ params }: Props) {
             {" · "}
             {available > 0 ? `${available} in stock` : "Currently unavailable"}
           </p>
-          <Link className="primary-button" href={ROUTES.home}>Continue shopping</Link>
+          <form action={toggleWishlistItem} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="returnTo" value={ROUTES.product(product.slug)} /><button type="submit" className="secondary-button">Save to wishlist</button></form><Link className="primary-button" href={ROUTES.home}>Continue shopping</Link>
         </div>
       </section>
     </main>
