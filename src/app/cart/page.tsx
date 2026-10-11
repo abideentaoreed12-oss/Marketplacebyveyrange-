@@ -28,8 +28,8 @@ export default async function CartPage() {
   if (cartError || error) return <main className="auth-shell"><section className="auth-panel"><h1>Cart unavailable</h1><p>Your cart could not be loaded. No saved items have been replaced.</p><Link href={ROUTES.home}>Back to marketplace</Link></section></main>;
   const rawLines = (data ?? []) as unknown as CartLine[];
   const lines = rawLines.map((line) => ({ ...line, products: Array.isArray(line.products) ? line.products[0] ?? null : line.products })).filter((line): line is CartLine & { products: CartProduct } => Boolean(line.products && line.products.status === "published"));
-  const totalMinor = lines.reduce((sum, line) => sum + line.products!.price_minor * line.quantity, 0);
-  const money = (minor: number, currency = "NGN") => new Intl.NumberFormat("en-NG", { style: "currency", currency }).format(minor / 100);
+  const totalMinor = lines.reduce((sum, line) => sum + BigInt(line.products!.price_minor) * BigInt(line.quantity), 0n);
+  const money = (minor: number | bigint, currency = "NGN") => { const amount = typeof minor === "bigint" ? minor : BigInt(minor); const whole = amount / 100n; const fraction = (amount % 100n).toString().padStart(2, "0"); return `${currency === "NGN" ? "₦" : currency + " "}${new Intl.NumberFormat("en-NG", { maximumFractionDigits: 0 }).format(whole)}.${fraction}`; };
   return (
     <main className="catalog-section">
       <header className="admin-header"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang <span className="brand-light">/ cart</span></span></Link><Link href={ROUTES.wishlist}>Saved items</Link></header>
