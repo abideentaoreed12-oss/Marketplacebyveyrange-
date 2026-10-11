@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
+import ProductSearch from "@/app/search/product-search";
 
 type HomepageContent = { heroEyebrow: string; heroTitle: string; heroAccent: string; heroDescription: string; heroButton: string; heroNote: string; catalogEyebrow: string; catalogTitle: string; footerTagline: string; trustOne: string; trustTwo: string; trustThree: string; trustFour: string; artBackLabel: string; artBackNumber: string; artTitle: string; artCaption: string };
 
@@ -82,6 +83,7 @@ export default async function HomePage() {
 
       <section className="catalog-section" id="discover">
         <div className="section-heading"><div><p className="eyebrow">{content?.catalogEyebrow ?? "CATALOG"}</p><h2>{content?.catalogTitle ?? "Published products"}</h2></div><span className="section-count">LIVE CATALOG</span></div>
+        {!unavailable && <ProductSearch />}
         {unavailable ? (
           <div className="catalog-state"><span className="state-icon">↻</span><h3>Catalog temporarily unavailable</h3><p>We couldn&apos;t retrieve the live catalog. Please try again later. We won&apos;t show sample products or invented prices.</p></div>
         ) : products.length === 0 ? (
