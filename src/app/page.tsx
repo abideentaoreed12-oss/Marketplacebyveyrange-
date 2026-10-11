@@ -71,11 +71,11 @@ export default async function HomePage() {
       </section>
 
       <section className="catalog-section" id="discover">
-        <div className="section-heading"><div><p className="eyebrow">THE MARKETPLACE</p><h2>Discover something good.</h2></div><span className="section-count">LIVE CATALOG</span></div>
+        <div className="section-heading"><div><p className="eyebrow">{content?.catalogEyebrow ?? "CATALOG"}</p><h2>{content?.catalogTitle ?? "Published products"}</h2></div><span className="section-count">LIVE CATALOG</span></div>
         {unavailable ? (
           <div className="catalog-state"><span className="state-icon">↻</span><h3>Catalog temporarily unavailable</h3><p>We couldn&apos;t retrieve the live catalog. Please try again later. We won&apos;t show sample products or invented prices.</p></div>
         ) : products.length === 0 ? (
-          <div className="catalog-state"><span className="state-icon">✳</span><h3>Your next find starts here.</h3><p>There are no published products to display yet. Approved sellers&apos; real listings will appear here when they are published.</p></div>
+          <div className="catalog-state"><span className="state-icon">✳</span><h3>Your next find starts here.</h3><p>No published products are currently available. Approved sellers&apos; real listings will appear here when they are published.</p></div>
         ) : (
           <div className="product-grid">{products.map((product) => (
             <Link className="product-card" key={product.id} href={ROUTES.product(product.slug)}>
@@ -86,7 +86,7 @@ export default async function HomePage() {
         )}
       </section>
 
-      <footer className="site-footer"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang</span></Link><p>Thoughtfully connected. Independently operated.</p><span>© {new Date().getFullYear()} Veyrang Marketplace</span></footer>
+      <footer className="site-footer"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang</span></Link>{content && <p>{content.footerTagline}</p>}<span>© {new Date().getFullYear()} Veyrang Marketplace</span></footer>
     </main>
   );
 }

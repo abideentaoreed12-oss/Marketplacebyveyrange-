@@ -2,7 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ROUTES } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
-import { createCategory, setSellerStatus, setProductStatus } from "./actions";
+import { createCategory, setSellerStatus, setProductStatus, saveHomepageContent } from "./actions";
 import { createProduct } from "./create-product";
 
 export const dynamic = "force-dynamic";
@@ -32,6 +32,8 @@ export default async function AdminPage() {
   }
   if (profile?.role !== "admin") redirect(ROUTES.home);
 
+  const { data: homepageRow, error: homepageError } = await supabase.from("site_content").select("title,content,status").eq("slug", "homepage").maybeSingle();
+  const homepageContent = (homepageRow?.content ?? {}) as Record<string, unknown>;
   const { data: categories, error: categoriesError } = await supabase.from("categories").select("id,name,slug,is_active").order("name");
   const { data: sellers, error: sellersError } = await supabase.from("seller_profiles").select("id,business_name,slug,verification_status").order("created_at", { ascending: false }).limit(100);
   const { data: products, error: productsError } = await supabase.from("products").select("id,name,status,price_minor,currency").order("created_at", { ascending: false }).limit(100);

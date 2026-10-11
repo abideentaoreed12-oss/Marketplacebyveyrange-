@@ -57,3 +57,29 @@ export async function setProductStatus(formData: FormData) {
   revalidatePath(ROUTES.home);
   redirect(ROUTES.admin);
 }
+
+
+export async function saveHomepageContent(formData: FormData) {
+  const db = await requireAdmin();
+  const fields = ["heroEyebrow", "heroTitle", "heroAccent", "heroDescription", "heroButton", "heroNote", "catalogEyebrow", "catalogTitle", "footerTagline"] as const;
+  const content: Record<string, string> = {};
+  for (const field of fields) {
+    const value = String(formData.get(field) ?? "").trim();
+    if (!value || value.length > (field === "heroDescription" ? 500 : 180)) {
+      throw new Error("Complete all homepage content fields within their character limits.");
+    }
+    content[field] = value;
+  }
+  const title = String(formData.get("title") ?? "").trim();
+  if (!title || title.length > 160) throw new Error("Enter a valid homepage content title.");
+  const { error } = await db.rpc("admin_save_site_content", {
+    p_slug: "homepage",
+    p_title: title,
+    p_content: content,
+    p_status: "published"
+  });
+  if (error) throw new Error(error.message || "Homepage content was not published.");
+  revalidatePath(ROUTES.home);
+  revalidatePath(ROUTES.admin);
+  redirect(ROUTES.admin);
+}
