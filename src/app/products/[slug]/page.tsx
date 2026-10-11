@@ -71,7 +71,10 @@ export default async function ProductPage({ params }: Props) {
     .eq("status", "published")
     .maybeSingle();
 
-  if (error) {\n    return <main className="auth-shell"><section className="auth-panel"><h1>Product temporarily unavailable</h1><p>The live listing could not be retrieved. Please try again later.</p><Link href={ROUTES.home}>Back to marketplace</Link></section></main>;\n  }\n  if (!product) notFound();
+  if (error) {
+    return <main className="auth-shell"><section className="auth-panel"><h1>Product temporarily unavailable</h1><p>The live listing could not be retrieved. Please try again later.</p><Link href={ROUTES.home}>Back to marketplace</Link></section></main>;
+  }
+  if (!product) notFound();
 
   const { data: seller, error: sellerError } = await supabase
     .from("seller_profiles")
