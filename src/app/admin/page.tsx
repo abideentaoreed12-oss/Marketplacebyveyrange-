@@ -53,6 +53,25 @@ export default async function AdminPage() {
       </section>
 
       <section className="admin-workspace">
+        <div className="admin-section-head"><div><p className="eyebrow">SITE CONTENT</p><h2>Homepage copy</h2></div></div>
+        {homepageError && <p className="admin-error">Published content could not be loaded. Saving is disabled until the database is available.</p>}
+        <form action={saveHomepageContent} className="admin-form admin-form-grid">
+          <input name="title" required maxLength={160} defaultValue={homepageRow?.title ?? ""} placeholder="Homepage content title" />
+          <input name="heroEyebrow" required maxLength={100} defaultValue={String(homepageContent.heroEyebrow ?? "")} placeholder="Hero eyebrow" />
+          <input name="heroTitle" required maxLength={100} defaultValue={String(homepageContent.heroTitle ?? "")} placeholder="Hero title" />
+          <input name="heroAccent" required maxLength={100} defaultValue={String(homepageContent.heroAccent ?? "")} placeholder="Hero accent line" />
+          <textarea name="heroDescription" required maxLength={500} rows={3} defaultValue={String(homepageContent.heroDescription ?? "")} placeholder="Hero description" className="span-2" />
+          <input name="heroButton" required maxLength={100} defaultValue={String(homepageContent.heroButton ?? "")} placeholder="Primary button label" />
+          <input name="heroNote" required maxLength={160} defaultValue={String(homepageContent.heroNote ?? "")} placeholder="Hero note" />
+          <input name="catalogEyebrow" required maxLength={100} defaultValue={String(homepageContent.catalogEyebrow ?? "")} placeholder="Catalog eyebrow" />
+          <input name="catalogTitle" required maxLength={120} defaultValue={String(homepageContent.catalogTitle ?? "")} placeholder="Catalog title" />
+          <input name="footerTagline" required maxLength={180} defaultValue={String(homepageContent.footerTagline ?? "")} placeholder="Footer tagline" />
+          <button type="submit" disabled={Boolean(homepageError)} className="primary-button span-2">Publish homepage content</button>
+        </form>
+        <p className="admin-footnote">Published homepage business copy comes from this Supabase record; there is no hardcoded marketing fallback.</p>
+      </section>
+
+      <section className="admin-workspace">
         <div className="admin-section-head"><div><p className="eyebrow">CATEGORIES</p><h2>Catalog structure</h2></div></div>
         <form action={createCategory} className="admin-form">
           <input name="name" required maxLength={120} placeholder="Category name" />

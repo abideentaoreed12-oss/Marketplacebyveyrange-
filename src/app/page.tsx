@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ROUTES } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
 
+type HomepageContent = { heroEyebrow: string; heroTitle: string; heroAccent: string; heroDescription: string; heroButton: string; heroNote: string; catalogEyebrow: string; catalogTitle: string; footerTagline: string };
+
 type Product = {
   id: string;
   name: string;
@@ -36,7 +38,13 @@ function formatPrice(minor: number, currency: string) {
 }
 
 export default async function HomePage() {
-  const { products, unavailable } = await getPublishedProducts();
+  const supabase = await createClient();
+  const [{ products, unavailable }, contentResult] = await Promise.all([
+    getPublishedProducts(),
+    supabase ? supabase.from("site_content").select("content").eq("slug", "homepage").eq("status", "published").maybeSingle() : Promise.resolve({ data: null, error: { message: "Supabase is not configured" } })
+  ]);
+  const content = contentResult.data?.content as HomepageContent | null;
+  const contentUnavailable = Boolean(contentResult.error);
   return (
     <main>
       <header className="site-header">
@@ -52,11 +60,11 @@ export default async function HomePage() {
 
       <section className="hero">
         <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-dot" /> YOUR NEXT GREAT FIND</p>
-          <h1>Good things.<br /><span>Great people.</span></h1>
-          <p className="hero-description">Shop thoughtfully from sellers building something worth sharing. One trusted place to discover what you need.</p>
-          <a className="primary-button" href="#discover">Explore the marketplace <span aria-hidden="true">↗</span></a>
-          <p className="hero-note">Made for everyday discoveries in Nigeria.</p>
+          <p className="eyebrow"><span className="eyebrow-dot" /> {content?.heroEyebrow}</p>
+          <h1>{content ? <>{content.heroTitle}<br /><span>{content.heroAccent}</span></> : contentUnavailable ? "Marketplace content unavailable" : "Homepage content not published"}</h1>
+          <p className="hero-description">{content?.heroDescription ?? (contentUnavailable ? "We could not retrieve the published homepage content. Please try again later." : "The administrator has not published homepage content yet.")}</p>
+          {content && <a className="primary-button" href="#discover">{content.heroButton} <span aria-hidden="true">↗</span></a>}
+          {content && <p className="hero-note">{content.heroNote}</p>}
         </div>
         <div className="hero-art" aria-label="Marketplace brand artwork" role="img">
           <div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" />
