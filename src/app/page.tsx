@@ -45,6 +45,7 @@ export default async function HomePage() {
         </Link>
         <nav aria-label="Main navigation">
           <a href="#discover">Discover</a>
+          <Link href={ROUTES.sellApply}>Sell</Link>
           <Link href={ROUTES.signIn}>Sign in</Link>
         </nav>
       </header>
@@ -72,15 +73,15 @@ export default async function HomePage() {
       <section className="catalog-section" id="discover">
         <div className="section-heading"><div><p className="eyebrow">THE MARKETPLACE</p><h2>Discover something good.</h2></div><span className="section-count">LIVE CATALOG</span></div>
         {unavailable ? (
-          <div className="catalog-state"><span className="state-icon">↻</span><h3>Catalog temporarily unavailable</h3><p>We couldn't retrieve the live catalog. Please try again later. We won't show sample products or invented prices.</p></div>
+          <div className="catalog-state"><span className="state-icon">↻</span><h3>Catalog temporarily unavailable</h3><p>We couldn&apos;t retrieve the live catalog. Please try again later. We won&apos;t show sample products or invented prices.</p></div>
         ) : products.length === 0 ? (
-          <div className="catalog-state"><span className="state-icon">✳</span><h3>Your next find starts here.</h3><p>There are no published products to display yet. Approved sellers' real listings will appear here when they are published.</p></div>
+          <div className="catalog-state"><span className="state-icon">✳</span><h3>Your next find starts here.</h3><p>There are no published products to display yet. Approved sellers&apos; real listings will appear here when they are published.</p></div>
         ) : (
           <div className="product-grid">{products.map((product) => (
-            <article className="product-card" key={product.id}>
+            <Link className="product-card" key={product.id} href={ROUTES.product(product.slug)}>
               {product.image_url ? <img src={product.image_url} alt={product.name} loading="lazy" /> : <div className="product-placeholder" aria-label="No product image available"><span>V.</span></div>}
               <div className="product-details"><h3>{product.name}</h3><p>{product.description || " "}</p><strong>{formatPrice(product.price_minor, product.currency)}</strong></div>
-            </article>
+            </Link>
           ))}</div>
         )}
       </section>
