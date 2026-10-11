@@ -66,6 +66,8 @@ export default async function AdminPage() {
           <input name="catalogEyebrow" required maxLength={100} defaultValue={String(homepageContent.catalogEyebrow ?? "")} placeholder="Catalog eyebrow" />
           <input name="catalogTitle" required maxLength={120} defaultValue={String(homepageContent.catalogTitle ?? "")} placeholder="Catalog title" />
           <input name="footerTagline" required maxLength={180} defaultValue={String(homepageContent.footerTagline ?? "")} placeholder="Footer tagline" />
+          <input name="seoTitle" required maxLength={70} defaultValue={String(homepageContent.seoTitle ?? "")} placeholder="SEO title (max 70)" />
+          <textarea name="seoDescription" required maxLength={180} rows={2} defaultValue={String(homepageContent.seoDescription ?? "")} placeholder="SEO description (max 180)" className="span-2" />
           <input name="trustOne" required maxLength={100} defaultValue={String(homepageContent.trustOne ?? "")} placeholder="Trust point 1" />
           <input name="trustTwo" required maxLength={100} defaultValue={String(homepageContent.trustTwo ?? "")} placeholder="Trust point 2" />
           <input name="trustThree" required maxLength={100} defaultValue={String(homepageContent.trustThree ?? "")} placeholder="Trust point 3" />

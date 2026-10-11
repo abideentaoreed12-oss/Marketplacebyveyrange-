@@ -61,11 +61,11 @@ export async function setProductStatus(formData: FormData) {
 
 export async function saveHomepageContent(formData: FormData) {
   const db = await requireAdmin();
-  const fields = ["heroEyebrow", "heroTitle", "heroAccent", "heroDescription", "heroButton", "heroNote", "catalogEyebrow", "catalogTitle", "footerTagline", "trustOne", "trustTwo", "trustThree", "trustFour", "artBackLabel", "artBackNumber", "artTitle", "artCaption"] as const;
+  const fields = ["heroEyebrow", "heroTitle", "heroAccent", "heroDescription", "heroButton", "heroNote", "catalogEyebrow", "catalogTitle", "footerTagline", "trustOne", "trustTwo", "trustThree", "trustFour", "artBackLabel", "artBackNumber", "artTitle", "artCaption", "seoTitle", "seoDescription"] as const;
   const content: Record<string, string> = {};
   for (const field of fields) {
     const value = String(formData.get(field) ?? "").trim();
-    if (!value || value.length > (field === "heroDescription" ? 500 : field === "artBackNumber" ? 12 : field === "artTitle" ? 80 : field === "artBackLabel" ? 50 : 180)) {
+    if (!value || value.length > (field === "heroDescription" ? 500 : field === "artBackNumber" ? 12 : field === "artTitle" ? 80 : field === "artBackLabel" ? 50 : field === "seoTitle" ? 70 : field === "seoDescription" ? 180 : 180)) {
       throw new Error("Complete all homepage content fields within their character limits.");
     }
     content[field] = value;
