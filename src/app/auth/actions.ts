@@ -41,7 +41,7 @@ export async function signUpWithPassword(formData: FormData) {
   const { error } = await db.auth.signUp({
     email,
     password,
-    options: { data: { display_name: displayName || undefined } }
+    options: { data: { display_name: displayName || undefined, full_name: displayName || undefined } }
   });
   if (error) throw new Error(error.message || "Account could not be created.");
 
