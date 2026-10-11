@@ -42,7 +42,7 @@ export default async function CartPage() {
               <div className="product-details"><h3>{product.name}</h3><p>{product.description || ""}</p><strong>{money(product.price_minor, product.currency)}</strong></div>
             </Link>
             <form action={setCartQuantity} className="admin-inline-form"><input type="hidden" name="productId" value={product.id} /><label>Qty <input name="quantity" type="number" min={0} max={99} defaultValue={line.quantity} required /></label><button className="secondary-button" type="submit">Update</button></form>
-            <p className="admin-footnote">Line total: {money(product.price_minor * line.quantity, product.currency)}</p>
+            <p className="admin-footnote">Line total: {money(BigInt(product.price_minor) * BigInt(line.quantity), product.currency)}</p>
           </article>;
         })}</div>
         <section className="catalog-state cart-summary"><h2>Subtotal: {money(totalMinor)}</h2><p>Delivery fees and final stock/price validation require a verified delivery quote. Checkout is not enabled until that provider is configured.</p><button className="primary-button" disabled>Checkout unavailable</button></section>

@@ -47,3 +47,15 @@ test("production security headers disable framing and add HSTS", () => {
   assert.match(config, /Strict-Transport-Security/);
   assert.match(config, /X-Content-Type-Options/);
 });
+
+
+test("cart is persistent, owner-scoped, and does not reserve inventory before checkout", () => {
+  const cartPage = read("src/app/cart/page.tsx");
+  const cartActions = read("src/app/cart/actions.ts");
+  const migration = read("supabase/migrations/20261011010000_persistent_cart.sql");
+  assert.match(cartPage, /from\("cart_items"\)/);
+  assert.match(cartActions, /rpc\("add_to_cart"/);
+  assert.match(migration, /for update/);
+  assert.match(migration, /available_quantity - i\.reserved_quantity/);
+  assert.match(cartPage, /Checkout is not enabled until that provider is configured/);
+});
