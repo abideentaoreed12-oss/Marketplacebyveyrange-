@@ -16,7 +16,7 @@ type CartProduct = {
   image_url: string | null;
   status: string;
 };
-type CartLine = { product_id: string; quantity: number; products: CartProduct | null };
+type CartLine = { product_id: string; quantity: number; products: CartProduct | CartProduct[] | null };
 
 export default async function CartPage() {
   const db = await createClient();
@@ -26,7 +26,8 @@ export default async function CartPage() {
   const { data: cart, error: cartError } = await db.from("carts").select("id").eq("user_id", user.id).maybeSingle();
   const { data, error } = cart ? await db.from("cart_items").select("product_id,quantity,products(id,name,slug,description,price_minor,currency,image_url,status)").eq("cart_id", cart.id).order("created_at", { ascending: false }) : { data: [], error: null };
   if (cartError || error) return <main className="auth-shell"><section className="auth-panel"><h1>Cart unavailable</h1><p>Your cart could not be loaded. No saved items have been replaced.</p><Link href={ROUTES.home}>Back to marketplace</Link></section></main>;
-  const lines = ((data ?? []) as unknown as CartLine[]).filter((line) => line.products?.status === "published" && line.products);
+  const rawLines = (data ?? []) as unknown as CartLine[];
+  const lines = rawLines.map((line) => ({ ...line, products: Array.isArray(line.products) ? line.products[0] ?? null : line.products })).filter((line): line is CartLine & { products: CartProduct } => Boolean(line.products && line.products.status === "published"));
   const totalMinor = lines.reduce((sum, line) => sum + line.products!.price_minor * line.quantity, 0);
   const money = (minor: number, currency = "NGN") => new Intl.NumberFormat("en-NG", { style: "currency", currency }).format(minor / 100);
   return (
