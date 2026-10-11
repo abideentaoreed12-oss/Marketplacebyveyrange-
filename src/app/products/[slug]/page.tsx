@@ -122,7 +122,7 @@ export default async function ProductPage({ params }: Props) {
             {" · "}
             {stockError || !stock ? "Stock status unavailable" : available > 0 ? `${available} in stock` : "Currently unavailable"}
           </p>
-          <form action={addToCart} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="quantity" value="1" /><button type="submit" className="primary-button" disabled={available < 1 || stockError || !stock}>Add to cart</button></form><form action={toggleWishlistItem} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="returnTo" value={ROUTES.product(product.slug)} /><button type="submit" className="secondary-button">Save to wishlist</button></form><Link className="primary-button" href={ROUTES.home}>Continue shopping</Link>
+          <form action={addToCart} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="quantity" value="1" /><button type="submit" className="primary-button" disabled={available < 1 || Boolean(stockError) || !stock}>Add to cart</button></form><form action={toggleWishlistItem} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="returnTo" value={ROUTES.product(product.slug)} /><button type="submit" className="secondary-button">Save to wishlist</button></form><Link className="primary-button" href={ROUTES.home}>Continue shopping</Link>
         </div>
       </section>
     </main>

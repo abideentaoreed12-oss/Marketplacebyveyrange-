@@ -6,6 +6,8 @@ import { toggleWishlistItem } from "./actions";
 
 export const dynamic = "force-dynamic";
 
+type WishlistProduct = { id: string; name: string; slug: string; description: string | null; price_minor: number; currency: string; image_url: string | null; status: string };
+
 export default async function WishlistPage() {
   const db = await createClient();
   if (!db) {
@@ -20,8 +22,8 @@ export default async function WishlistPage() {
   if (wishlistError || itemsError) {
     return <main className="auth-shell"><section className="auth-panel"><h1>Wishlist unavailable</h1><p>Your saved items could not be loaded. Please try again later.</p><Link href={ROUTES.home}>Back to marketplace</Link></section></main>;
   }
-  const rawItems = (items ?? []) as unknown as Array<{ products: CartProduct | CartProduct[] | null }>;
-  const products = rawItems.flatMap((item) => Array.isArray(item.products) ? item.products : item.products ? [item.products] : []).filter((product): product is CartProduct => Boolean(product && product.status === "published"));
+  const rawItems = (items ?? []) as unknown as Array<{ products: WishlistProduct | WishlistProduct[] | null }>;
+  const products = rawItems.flatMap((item) => Array.isArray(item.products) ? item.products : item.products ? [item.products] : []).filter((product): product is WishlistProduct => Boolean(product && product.status === "published"));
   return (
     <main className="catalog-section">
       <header className="admin-header"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang <span className="brand-light">/ saved items</span></span></Link><Link href={ROUTES.home}>Continue shopping</Link></header>
