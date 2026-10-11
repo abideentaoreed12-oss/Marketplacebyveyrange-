@@ -15,8 +15,8 @@ export default function ProductSearch() {
       <form action={formAction} className="catalog-search-form">
         <label htmlFor="product-search-query">Find a product</label>
         <div className="catalog-search-controls">
-          <input id="product-search-query" name="query" type="search" maxLength={120} defaultValue={state.query} placeholder="Search products, brands, or keywords" autoComplete="off" />
-          <button type="submit" className="primary-button" disabled={pending}>{pending ? "Searching…" : "Search"}</button>
+          <input id="product-search-query" name="query" type="search" maxLength={120} defaultValue={state.query} placeholder="Search for products, brands and more..." autoComplete="off" />
+          <button type="submit" className="primary-button" disabled={pending}>{pending ? "…" : "GO"}</button>
         </div>
       </form>
       {state.searched && (
