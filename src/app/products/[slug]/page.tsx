@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ROUTES } from "@/lib/routes";
 import { createClient } from "@/lib/supabase/server";
 import { toggleWishlistItem } from "@/app/wishlist/actions";
+import { addToCart } from "@/app/cart/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -57,7 +58,7 @@ export default async function ProductPage({ params }: Props) {
           <span className="brand-mark">V</span>
           <span>veyrang<span className="brand-light"> marketplace</span></span>
         </Link>
-        <nav><Link href={ROUTES.home}>Catalog</Link><Link href={ROUTES.signIn}>Sign in</Link></nav>
+        <nav><Link href={ROUTES.home}>Catalog</Link><Link href={ROUTES.cart}>Cart</Link><Link href={ROUTES.wishlist}>Saved items</Link><Link href={ROUTES.signIn}>Sign in</Link></nav>
       </header>
       <section className="product-detail">
         <div className="product-detail-media">
@@ -78,7 +79,7 @@ export default async function ProductPage({ params }: Props) {
             {" · "}
             {available > 0 ? `${available} in stock` : "Currently unavailable"}
           </p>
-          <form action={toggleWishlistItem} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="returnTo" value={ROUTES.product(product.slug)} /><button type="submit" className="secondary-button">Save to wishlist</button></form><Link className="primary-button" href={ROUTES.home}>Continue shopping</Link>
+          <form action={addToCart} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="quantity" value="1" /><button type="submit" className="primary-button" disabled={available < 1}>Add to cart</button></form><form action={toggleWishlistItem} className="product-action-form"><input type="hidden" name="productId" value={product.id} /><input type="hidden" name="returnTo" value={ROUTES.product(product.slug)} /><button type="submit" className="secondary-button">Save to wishlist</button></form><Link className="primary-button" href={ROUTES.home}>Continue shopping</Link>
         </div>
       </section>
     </main>

@@ -54,6 +54,8 @@ export default async function HomePage() {
         <nav aria-label="Main navigation">
           <a href="#discover">Discover</a>
           <Link href={ROUTES.sellApply}>Sell</Link>
+          <Link href={ROUTES.cart}>Cart</Link>
+          <Link href={ROUTES.wishlist}>Saved items</Link>
           <Link href={ROUTES.signIn}>Sign in</Link>
         </nav>
       </header>
