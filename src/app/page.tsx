@@ -52,12 +52,10 @@ export default async function HomePage() {
         <Link className="brand" href={ROUTES.home} aria-label="Veyrang Marketplace home">
           <span className="brand-mark">V</span><span>veyrang<span className="brand-light"> marketplace</span></span>
         </Link>
-        <nav aria-label="Main navigation">
-          <a href="#discover">Discover</a>
-          <Link href={ROUTES.sellApply}>Sell</Link>
-          <Link href={ROUTES.cart}>Cart</Link>
-          <Link href={ROUTES.wishlist}>Saved items</Link>
-          <Link href={ROUTES.signIn}>Sign in</Link>
+        <nav className="main-navigation" aria-label="Main navigation">
+          <a className="nav-discover" href="#discover">Discover</a>
+          <Link className="nav-sell" href={ROUTES.sellApply}>Sell</Link>
+          <Link className="nav-join" href={ROUTES.signIn}>Join</Link>
         </nav>
       </header>
 
