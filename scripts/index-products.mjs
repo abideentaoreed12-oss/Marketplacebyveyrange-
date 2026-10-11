@@ -1,12 +1,17 @@
 import { algoliasearch } from "algoliasearch";
 import { createClient } from "@supabase/supabase-js";
 
-const required = ["NEXT_PUBLIC_SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "ALGOLIA_APP_ID", "ALGOLIA_WRITE_API_KEY"];
+const env = (primary, integrationName) => process.env[primary]?.trim() || process.env[integrationName]?.trim();
+const appId = env("ALGOLIA_APP_ID", "marketplace_ALGOLIA_APP_ID");
+const writeKey = env("ALGOLIA_WRITE_API_KEY", "marketplace_ALGOLIA_WRITE_API_KEY");
+const required = ["NEXT_PUBLIC_SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"];
 const missing = required.filter((name) => !process.env[name]?.trim());
+if (!appId) missing.push("ALGOLIA_APP_ID (or marketplace_ALGOLIA_APP_ID)");
+if (!writeKey) missing.push("ALGOLIA_WRITE_API_KEY (or marketplace_ALGOLIA_WRITE_API_KEY)");
 if (missing.length > 0) { console.error("Cannot index products. Missing environment variables: " + missing.join(", ")); process.exit(1); }
 
 const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, { auth: { autoRefreshToken: false, persistSession: false } });
-const algolia = algoliasearch(process.env.ALGOLIA_APP_ID, process.env.ALGOLIA_WRITE_API_KEY);
+const algolia = algoliasearch(appId, writeKey);
 const indexName = "products"; const pageSize = 500; const records = [];
 
 await algolia.setSettings({ indexName, indexSettings: { searchableAttributes: ["name", "description", "slug"], attributesForFaceting: ["status"] }, waitForTasks: true });
