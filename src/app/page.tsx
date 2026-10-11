@@ -50,7 +50,8 @@ export default async function HomePage() {
     <main>
       <header className="site-header">
         <Link className="brand" href={ROUTES.home} aria-label="Veyrang Marketplace home">
-          <span className="brand-mark">V</span><span>veyrang<span className="brand-light"> marketplace</span></span>
+          <span className="brand-mark" aria-hidden="true">V</span>
+          <span className="brand-wording"><span className="brand-name">VeyraNG</span><small>MARKETPLACE</small></span>
         </Link>
         <nav className="main-navigation" aria-label="Main navigation">
           <a className="nav-discover" href="#discover">Discover</a>
@@ -58,7 +59,15 @@ export default async function HomePage() {
           <Link className="nav-join" href={ROUTES.signIn}>Join</Link>
           <Link className="nav-cart" href={ROUTES.cart}>Cart</Link>
         </nav>
+        <div className="header-search">{!unavailable && <ProductSearch />}</div>
       </header>
+      <nav className="category-navigation" aria-label="Marketplace shortcuts">
+        <Link className="category-link category-active" href={ROUTES.home}><span aria-hidden="true">⌂</span><small>Home</small></Link>
+        <a className="category-link" href="#discover"><span aria-hidden="true">⌕</span><small>Discover</small></a>
+        <Link className="category-link" href={ROUTES.sellApply}><span aria-hidden="true">＋</span><small>Sell</small></Link>
+        <Link className="category-link" href={ROUTES.wishlist}><span aria-hidden="true">♡</span><small>Saved</small></Link>
+        <Link className="category-link" href={ROUTES.cart}><span aria-hidden="true">🛒</span><small>Cart</small></Link>
+      </nav>
 
       <section className="hero">
         <div className="hero-copy">
@@ -68,21 +77,23 @@ export default async function HomePage() {
           {content && <a className="primary-button" href="#discover">{content.heroButton} <span aria-hidden="true">↗</span></a>}
           {content && <p className="hero-note">{content.heroNote}</p>}
         </div>
-        <div className="hero-art" aria-label="Marketplace brand artwork" role="img">
-          <div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" />
-          <div className="art-tile tile-back"><span>discover</span><b>01</b></div>
-          <div className="art-tile tile-front"><span className="tile-spark">✳</span><strong>Find<br />your<br />thing.</strong><small>VEYRANG / MARKETPLACE</small></div>
-          <span className="art-caption">A little more you.</span>
+        <div className="hero-art" aria-label="Veyrang Marketplace promotional artwork" role="img">
+          <div className="hero-glow" />
+          <div className="hero-burst" aria-hidden="true">✳</div>
+          <div className="hero-product-shape hero-device" aria-hidden="true"><span /><i /><i /><i /></div>
+          <div className="hero-product-shape hero-bag" aria-hidden="true"><span /></div>
+          <div className="hero-product-shape hero-sneaker" aria-hidden="true"><span /></div>
+          <div className="hero-product-shape hero-watch" aria-hidden="true"><span /></div>
+          <span className="art-caption">Discover something good.</span>
         </div>
       </section>
 
-      <section className="trust-strip" aria-label="Marketplace principles">
-        <div><span>01</span><p>Verified sellers</p></div><div><span>02</span><p>Clear pricing</p></div><div><span>03</span><p>Real availability</p></div><div><span>04</span><p>Support that helps</p></div>
+      <section className="trust-strip" aria-label="Marketplace shopping benefits">
+        <div><span aria-hidden="true">◇</span><p>Secure shopping</p></div><div><span aria-hidden="true">↗</span><p>Trusted sellers</p></div><div><span aria-hidden="true">✓</span><p>Real availability</p></div><div><span aria-hidden="true">♡</span><p>Help when needed</p></div>
       </section>
 
       <section className="catalog-section" id="discover">
-        <div className="section-heading"><div><p className="eyebrow">{content?.catalogEyebrow ?? "CATALOG"}</p><h2>{content?.catalogTitle ?? "Published products"}</h2></div><span className="section-count">LIVE CATALOG</span></div>
-        {!unavailable && <ProductSearch />}
+        <div className="section-heading"><div><p className="eyebrow">{content?.catalogEyebrow ?? "DISCOVER"}</p><h2>{content?.catalogTitle ?? "Find your next favourite"}</h2></div><span className="section-count">LIVE CATALOG</span></div>
         {unavailable ? (
           <div className="catalog-state"><span className="state-icon">↻</span><h3>Catalog temporarily unavailable</h3><p>We couldn&apos;t retrieve the live catalog. Please try again later. We won&apos;t show sample products or invented prices.</p></div>
         ) : products.length === 0 ? (
@@ -100,8 +111,9 @@ export default async function HomePage() {
       <nav className="mobile-marketplace-nav" aria-label="Marketplace shortcuts">
         <Link href={ROUTES.home} aria-current="page"><span aria-hidden="true">⌂</span><small>Home</small></Link>
         <a href="#discover"><span aria-hidden="true">⌕</span><small>Discover</small></a>
-        <Link href={ROUTES.sellApply}><span aria-hidden="true">＋</span><small>Sell</small></Link>
-        <Link href={ROUTES.cart}><span aria-hidden="true">♧</span><small>Cart</small></Link>
+        <Link href={ROUTES.sellApply}><span aria-hidden="true">▤</span><small>Sell</small></Link>
+        <Link href={ROUTES.wishlist}><span aria-hidden="true">♡</span><small>Saved</small></Link>
+        <Link href={ROUTES.cart}><span aria-hidden="true">🛒</span><small>Cart</small></Link>
       </nav>
       <footer className="site-footer"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang</span></Link>{content && <p>{content.footerTagline}</p>}<span>© {new Date().getFullYear()} Veyrang Marketplace</span></footer>
     </main>
