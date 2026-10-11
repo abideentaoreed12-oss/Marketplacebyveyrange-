@@ -97,6 +97,12 @@ export default async function HomePage() {
         )}
       </section>
 
+      <nav className="mobile-marketplace-nav" aria-label="Marketplace shortcuts">
+        <Link href={ROUTES.home} aria-current="page"><span aria-hidden="true">⌂</span><small>Home</small></Link>
+        <a href="#discover"><span aria-hidden="true">⌕</span><small>Discover</small></a>
+        <Link href={ROUTES.sellApply}><span aria-hidden="true">＋</span><small>Sell</small></Link>
+        <Link href={ROUTES.cart}><span aria-hidden="true">♧</span><small>Cart</small></Link>
+      </nav>
       <footer className="site-footer"><Link className="brand" href={ROUTES.home}><span className="brand-mark">V</span><span>veyrang</span></Link>{content && <p>{content.footerTagline}</p>}<span>© {new Date().getFullYear()} Veyrang Marketplace</span></footer>
     </main>
   );
