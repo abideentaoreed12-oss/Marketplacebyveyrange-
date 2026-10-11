@@ -80,14 +80,50 @@ export async function setProductStatus(formData: FormData) {
   redirect(ROUTES.admin);
 }
 
-
 export async function saveHomepageContent(formData: FormData) {
   const db = await requireAdmin();
-  const fields = ["heroEyebrow", "heroTitle", "heroAccent", "heroDescription", "heroButton", "heroNote", "catalogEyebrow", "catalogTitle", "footerTagline", "trustOne", "trustTwo", "trustThree", "trustFour", "artBackLabel", "artBackNumber", "artTitle", "artCaption", "seoTitle", "seoDescription"] as const;
+  const fields = [
+    "heroEyebrow",
+    "heroTitle",
+    "heroAccent",
+    "heroDescription",
+    "heroButton",
+    "heroNote",
+    "catalogEyebrow",
+    "catalogTitle",
+    "footerTagline",
+    "trustOne",
+    "trustTwo",
+    "trustThree",
+    "trustFour",
+    "flashTitle",
+    "choiceTitle",
+    "trendingTitle",
+    "trendingLinkLabel",
+    "artBackLabel",
+    "artBackNumber",
+    "artTitle",
+    "artCaption",
+    "seoTitle",
+    "seoDescription"
+  ] as const;
+  const limits: Partial<Record<(typeof fields)[number], number>> = {
+    heroDescription: 500,
+    artBackNumber: 12,
+    artTitle: 80,
+    artBackLabel: 50,
+    seoTitle: 70,
+    seoDescription: 180,
+    flashTitle: 40,
+    choiceTitle: 40,
+    trendingTitle: 40,
+    trendingLinkLabel: 40
+  };
   const content: Record<string, string> = {};
   for (const field of fields) {
     const value = String(formData.get(field) ?? "").trim();
-    if (!value || value.length > (field === "heroDescription" ? 500 : field === "artBackNumber" ? 12 : field === "artTitle" ? 80 : field === "artBackLabel" ? 50 : field === "seoTitle" ? 70 : field === "seoDescription" ? 180 : 180)) {
+    const max = limits[field] ?? 180;
+    if (!value || value.length > max) {
       throw new Error("Complete all homepage content fields within their character limits.");
     }
     content[field] = value;
@@ -105,7 +141,6 @@ export async function saveHomepageContent(formData: FormData) {
   revalidatePath(ROUTES.admin);
   redirect(ROUTES.admin);
 }
-
 
 export async function setCategoryStatus(formData: FormData) {
   const db = await requireAdmin();
