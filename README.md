@@ -25,6 +25,20 @@ Independent Next.js application for the Veyrang Marketplace, separate from the e
 4. Install dependencies with `npm install`.
 5. Run `npm run typecheck`, `npm run lint`, `npm run routes:audit`, and `npm run build`.
 
+### Algolia product search
+
+Product search uses the existing Supabase catalog as its source of truth and Algolia as a search index. Configure **ALGOLIA_APP_ID**, **ALGOLIA_SEARCH_API_KEY**, and a restricted **ALGOLIA_WRITE_API_KEY** in your local **.env.local** and in the Vercel project Environment Variables. Never commit **.env.local**, put the write key in browser code, or use an Algolia Admin API key for indexing.
+
+For local setup, link the Vercel project and pull its configured variables with **npx vercel link** and **npx vercel env pull .env.local**. The repository .gitignore already excludes local environment files.
+
+After applying the Marketplace Supabase migrations and configuring the required Supabase and Algolia credentials, run:
+
+```sh
+npm run algolia:index-products
+```
+
+This reconciles the **products** index from genuine published Supabase products only and removes records for products that are no longer published. The indexing key needs only the permissions required to add/edit/delete records in the **products** index. Product publication changes also update the Algolia index when the server-side indexing credentials are configured. Search uses the search-only key and does not trust Algolia as the source of price, stock, or product-detail truth.
+
 No sample data is seeded. The storefront displays an empty state until genuine products are published by approved sellers.
 
 ## Build phases

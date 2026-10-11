@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { removeProductFromSearch, upsertPublishedProduct } from "@/lib/algolia/server";
 import { ROUTES } from "@/lib/routes";
 
 async function requireAdmin() {
@@ -53,6 +54,27 @@ export async function setProductStatus(formData: FormData) {
   }
   const { error } = await db.rpc("admin_set_product_status", { p_product_id: id, p_status: status });
   if (error) throw new Error(error.message || "Product status was not updated.");
+
+  try {
+    if (status === "published") {
+      const { data: product, error: productError } = await db
+        .from("products")
+        .select("id,name,slug,description,price_minor,currency,image_url,status")
+        .eq("id", id)
+        .eq("status", "published")
+        .maybeSingle();
+      if (productError || !product) throw new Error("Published product could not be loaded.");
+      await upsertPublishedProduct({
+        id: product.id, name: product.name, slug: product.slug, description: product.description,
+        price_minor: Number(product.price_minor), currency: product.currency, image_url: product.image_url,
+      });
+    } else {
+      await removeProductFromSearch(id);
+    }
+  } catch {
+    throw new Error("The product status was saved in Supabase, but Algolia indexing failed. Run npm run algolia:index-products to reconcile search.");
+  }
+
   revalidatePath(ROUTES.admin);
   revalidatePath(ROUTES.home);
   redirect(ROUTES.admin);
