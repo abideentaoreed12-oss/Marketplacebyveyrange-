@@ -268,3 +268,42 @@ h1 span{color:#f36a16}
  .trust-strip p{font-size:8px}
  .catalog-section{padding-left:12px;padding-right:12px}
 }
+
+
+/* Final mobile banner proportions: copy and product artwork share one card */
+@media(max-width:760px){
+ .hero{display:grid;grid-template-columns:minmax(0,1fr);padding:10px 16px 16px;gap:0;align-items:stretch}
+ .hero-copy,.hero-art{grid-area:1/1}
+ .hero-copy{position:relative;z-index:5;align-self:center;width:66%;padding:16px 0 16px 2px;max-width:none}
+ .hero-copy .eyebrow{font-size:8px;letter-spacing:.45px;gap:5px}
+ .hero-copy .eyebrow-dot{width:5px;height:5px;flex:0 0 5px}
+ .hero h1{font-size:clamp(23px,6.1vw,34px);line-height:1.05;letter-spacing:-1px;margin:7px 0}
+ .hero-description{font-size:10px;line-height:1.35;margin-bottom:0}
+ .hero .primary-button{font-size:10px;padding:7px 11px;gap:10px;margin-top:8px}
+ .hero-art{position:relative;z-index:1;width:100%;height:clamp(155px,43vw,190px);min-width:0;border-radius:13px}
+ .hero-glow{inset:auto -8% -40% 18%;height:75%}
+ .hero-device{left:49%;top:24%;width:42px;height:74px}
+ .hero-device i{top:13px;left:4px;width:9px;height:9px}
+ .hero-bag{right:5%;top:23%;width:57px;height:63px}
+ .hero-bag>span{top:-16px;left:12px;width:30px;height:23px}
+ .hero-sneaker{left:54%;bottom:17%;width:91px;height:29px}
+ .hero-sneaker>span{left:37px;top:5px;width:27px}
+ .hero-watch{right:24%;bottom:17%;width:24px;height:39px}
+ .hero-watch>span{inset:9px 3px}
+ .hero-burst{left:59%;top:7%;font-size:28px}
+ .hero-art .art-caption{font-size:7px;bottom:7px;right:8px}
+ .trust-strip{margin:0 16px;padding:7px 0}
+ .trust-strip p{font-size:8px}
+ .catalog-section{padding-top:25px}
+}
+@media(max-width:380px){
+ .hero{padding-left:12px;padding-right:12px}
+ .hero-copy{width:68%;padding-left:1px}
+ .hero h1{font-size:clamp(21px,6vw,25px);letter-spacing:-.7px}
+ .hero-description{font-size:9px}
+ .hero-art{height:155px}
+ .hero-device{left:49%;width:36px;height:66px}
+ .hero-bag{width:50px;height:56px}
+ .hero-sneaker{left:53%;width:78px;height:26px}
+ .hero-watch{right:23%;width:22px;height:35px}
+}
